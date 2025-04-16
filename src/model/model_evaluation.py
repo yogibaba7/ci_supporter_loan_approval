@@ -73,7 +73,7 @@ def load_model():
         logger.error(f"error occured -> {e}")
 
 # evaluate_results
-def evaluate_results(model,X_test,y_test):
+def evaluate_results(model,X_test,y_test,save_result_path:str):
     try:
         logger.debug('making prediction..')
         y_pred = model.predict(X_test)
@@ -89,8 +89,9 @@ def evaluate_results(model,X_test,y_test):
             'recall_score':recall,
             'precision_score':precision
         }
+        os.makedirs(save_result_path)
         logger.debug('saving result in reports.metrics.json')
-        with open('reports/metrics.json','w') as f:
+        with open(os.path.join(save_result_path,'metrics.json'),'w') as f:
             json.dump(dict,f)
         return dict
     except Exception as e:
@@ -121,7 +122,8 @@ def main():
         # load model
         model = load_model()
         # evaluate results
-        results = evaluate_results(model,X_test,y_test)
+        dir = 'reports'
+        results = evaluate_results(model,X_test,y_test,dir)
         # load parameters of model_building
         parameters = load_params()
 
