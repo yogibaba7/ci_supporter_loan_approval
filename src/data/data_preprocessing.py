@@ -32,14 +32,16 @@ def load_data(path:str)->tuple[pd.DataFrame]:
         logger.error(f"error occured --> {e}")
 
 # save encoding
-def save_encoding(data:pd.DataFrame)->None:
+def save_encoding(data:pd.DataFrame,save_path:str)->None:
     logger.debug('training and saving the model in models/encoder.pkl')
     try:
         # train encoder
         oe = OrdinalEncoder()
         oe.fit(data)
+        # create directory
+        os.makedirs(save_path)
         # save encoder
-        joblib.dump(oe,'models/encoder.pkl')
+        joblib.dump(oe,os.path.join(save_path,'encoder.pkl'))
     except Exception as e:
         logger.error(f"error occured -->{e}")
 
@@ -127,7 +129,8 @@ def main():
     num_cols = ['ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term']
 
     # train encoder
-    save_encoding(train_data[cat_cols])
+    dir = 'models'
+    save_encoding(train_data[cat_cols],dir)
 
     # apply encoder on both train and test set
     train_data[cat_cols] = apply_encoding(train_data[cat_cols])
