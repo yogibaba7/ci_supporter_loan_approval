@@ -10,6 +10,29 @@ import yaml
 import json
 from sklearn.metrics import accuracy_score,recall_score,precision_score,f1_score
 
+#CONFIGURE EXPERIMENT
+import mlflow
+import dagshub
+from mlflow.models.signature import infer_signature
+
+# Set up DagsHub credentials for MLflow tracking
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+dagshub_url = "https://dagshub.com"
+repo_owner = "yogibaba7"
+repo_name = "ci_supporter_loan_approval"
+
+# Set up MLflow tracking URI
+mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+
+# create a experiment
+mlflow.set_experiment('pipeline_exp')
+
 # configure logging
 logger = logging.getLogger('model_evaluations')
 logger.setLevel(logging.DEBUG)
@@ -83,15 +106,7 @@ def save_model_info(run_id,model_path,file_path):
     except Exception as e:
         logger.error(f"error occured -->{e}")
 
-#CONFIGURE EXPERIMENT
-import mlflow
-import dagshub
-from mlflow.models.signature import infer_signature
-dagshub.init(repo_owner='yogibaba7', repo_name='ci_supporter_loan_approval', mlflow=True)
-# set tracking uri
-mlflow.set_tracking_uri('https://dagshub.com/yogibaba7/ci_supporter_loan_approval.mlflow/')
-# create a experiment
-mlflow.set_experiment('pipeline_exp')
+
 
 # main
 def main():

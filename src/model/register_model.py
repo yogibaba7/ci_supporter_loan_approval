@@ -7,6 +7,27 @@ import logging
 import os
 import sys
 
+#CONFIGURE EXPERIMENT
+import mlflow
+import dagshub
+from mlflow.models.signature import infer_signature
+
+# Set up DagsHub credentials for MLflow tracking
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+dagshub_url = "https://dagshub.com"
+repo_owner = "yogibaba7"
+repo_name = "ci_supporter_loan_approval"
+
+# Set up MLflow tracking URI
+mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+
+
 # configure logging
 logger = logging.getLogger('model_evaluations')
 logger.setLevel(logging.DEBUG)
@@ -16,13 +37,6 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-#CONFIGURE EXPERIMENT
-import mlflow
-import dagshub
-
-dagshub.init(repo_owner='yogibaba7', repo_name='ci_supporter_loan_approval', mlflow=True)
-# set tracking uri
-mlflow.set_tracking_uri('https://dagshub.com/yogibaba7/ci_supporter_loan_approval.mlflow/')
 
 # load model info
 def load_model_info(file_path:str)->dict:
