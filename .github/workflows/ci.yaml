@@ -3,7 +3,7 @@ name : CI-PIPELINE
 on : push
 
 jobs:
-  test-pipeline:
+  test_pipeline:
     runs-on : ubuntu-latest
 
     steps:
