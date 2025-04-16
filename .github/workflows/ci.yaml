@@ -13,7 +13,7 @@ jobs:
         uses : actions/setup-python@v2
       - name : install dependencies
         run : |
-          pip install requirements.txt
+          pip install -r requirements.txt
       - name : run pipeline
         run : |
           dvc repro
