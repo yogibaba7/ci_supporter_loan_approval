@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Approval Predictor</title>
+</head>
+<body>
+    <h2>Loan Approval Form</h2>
+    <form method="post" action="/predict">
+        Gender:
+        <select name="Gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br><br>
+
+        Married:
+        <select name="Married">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        Dependents:
+        <select name="Dependents">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3+">3+</option>
+        </select><br><br>
+        >
+
+        Education:
+        <select name="Education">
+            <option value="Graduate">Graduate</option>
+            <option value="Not Graduate">Not Graduate</option>
+        </select><br><br>
+
+        Self Employed:
+        <select name="Self_Employed">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        Applicant Income:
+        <input type="number" name="ApplicantIncome"><br><br>
+
+        Coapplicant Income:
+        <input type="number" name="CoapplicantIncome"><br><br>
+
+        Loan Amount:
+        <input type="number" name="LoanAmount"><br><br>
+
+        Loan Amount Term:
+        <input type="number" name="Loan_Amount_Term"><br><br>
+
+        Credit History:
+        <select name="Credit_History">
+            <option value=1>1</option>
+            <option value=0>0</option>
+        </select><br><br>
+
+        Property Area:
+        <select name="Property_Area">
+            <option value="Urban">Urban</option>
+            <option value="Semiurban">Semiurban</option>
+            <option value="Rural">Rural</option>
+        </select><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if result %}
+        <h3>Prediction: {{ result }}</h3>
+    {% endif %}
+</body>
+</html>
