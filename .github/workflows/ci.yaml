@@ -19,3 +19,11 @@ jobs:
           DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
         run : |
           dvc repro
+      
+      - name : test_model_loading
+        env : 
+          DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
+        run : |
+          python tests/test_model_loading.py
+  
+
