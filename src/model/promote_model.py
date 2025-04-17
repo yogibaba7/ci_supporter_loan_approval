@@ -59,7 +59,7 @@ def promote_to_production(client,model_name:str)->None:
         client.set_registered_model_alias(model_name, "production", staging_version)
 
         # Optional: remove staging alias now that it's promoted
-        client.delete_registered_model_alias(model_name, "staging")
+        #client.delete_registered_model_alias(model_name, "staging")
     except Exception as e:
         print("No existing staging model found, skipping promote production step.")
 
