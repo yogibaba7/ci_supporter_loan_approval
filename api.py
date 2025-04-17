@@ -2,16 +2,28 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import numpy as np 
 import pandas as pd
-
-# load model --> 
-
+import os
 import mlflow
 from mlflow.pyfunc import load_model
-# set tracking uri
-mlflow.set_tracking_uri('https://dagshub.com/yogibaba7/ci_supporter_loan_approval.mlflow/')
-model_name = 'mymodel'
-version = 1
-model_uri = f"models:/{model_name}/{version}"
+
+# load model
+# Load credentials from environment
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+# Set MLflow tracking URI
+dagshub_url = "https://dagshub.com"
+repo_owner = "yogibaba7"
+repo_name = "ci_supporter_loan_approval"
+mlflow.set_tracking_uri(f"{dagshub_url}/{repo_owner}/{repo_name}.mlflow")
+
+# Model name and alias to test
+model_name = "mymodel"
+model_uri = f"models:/{model_name}@production"
 model = load_model(model_uri)
 
 app = FastAPI()

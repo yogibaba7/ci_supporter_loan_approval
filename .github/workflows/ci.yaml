@@ -44,6 +44,11 @@ jobs:
         run : |
           python src/model/promote_model.py
 
+      - name : test_model_api
+        env :
+          DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
+        run : |
+          python tests/test_model_api.py
           
 
   
