@@ -32,5 +32,12 @@ jobs:
         run : |
           python tests/test_model_signature.py
 
+      - name : test_model_performance
+        env :
+          DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
+        run : |
+          python tests/test_model_performance.py
+          
+
   
 
