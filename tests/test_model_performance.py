@@ -24,7 +24,7 @@ class TestModelPerformance(unittest.TestCase):
         mlflow.set_tracking_uri(f"{dagshub_url}/{repo_owner}/{repo_name}.mlflow")
 
         model_name = "mymodel"
-        cls.model = mlflow.pyfunc.load_model(f"models:/{model_name}@production")
+        cls.model = mlflow.pyfunc.load_model(f"models:/{model_name}@staging")
 
         # Load test data
         cls.test_data = pd.read_csv("data/processed/test_processed.csv")

@@ -61,9 +61,9 @@ def register_model(model_name:str,model_info:dict):
         # assign a alias to register model
         client = mlflow.MlflowClient()
         latest_version = client.get_latest_versions(model_name,stages=["None"])[0]
-        client.set_registered_model_alias(model_name,'production',latest_version.version)
+        client.set_registered_model_alias(model_name,'staging',latest_version.version)
         # assign a tag for current model 
-        client.set_registered_model_tag(model_name,'testing','passed')
+        client.set_registered_model_tag(model_name,'testing','running')
 
     except Exception as e:
         logger.error(f"error occured -> {e}")

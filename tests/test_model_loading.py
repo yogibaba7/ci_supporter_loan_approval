@@ -30,7 +30,7 @@ class TestModelLoading(unittest.TestCase):
 
         # Model name and alias to test
         cls.model_name = "mymodel"
-        cls.model_uri = f"models:/{cls.model_name}@production"
+        cls.model_uri = f"models:/{cls.model_name}@staging"
 
     def test_model_loading(self):
         """

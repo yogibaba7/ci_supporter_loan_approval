@@ -26,7 +26,7 @@ class TestModelSignature(unittest.TestCase):
 
         # Model name and alias to test
         cls.model_name = "mymodel"
-        cls.model_uri = f"models:/{cls.model_name}@production"   # using alias instead of stage
+        cls.model_uri = f"models:/{cls.model_name}@staging"   # using alias instead of stage
         cls.model = mlflow.pyfunc.load_model(cls.model_uri)
 
     def test_model_signature(self):

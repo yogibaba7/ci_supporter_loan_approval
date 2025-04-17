@@ -37,6 +37,13 @@ jobs:
           DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
         run : |
           python tests/test_model_performance.py
+      
+      - name : promote_model
+        env :
+          DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
+        run : |
+          python src/model/promote_model.py
+
           
 
   
