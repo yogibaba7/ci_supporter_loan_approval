@@ -39,17 +39,36 @@ jobs:
           python tests/test_model_performance.py
       
       - name : promote_model
+        if: success()
         env :
           DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
         run : |
           python src/model/promote_model.py
 
       - name : test_model_api
+        if: success()
         env :
           DAGSHUB_PAT : ${{secrets.DAGSHUB_PAT}}
         run : |
           python tests/test_model_api.py
           
+      - name : login in to docker hub
+        if: success():
+        uses : docker/login-action@v2
+        with :
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_ACESS_TOKEN}}
+      
+      - name: build docker image
+        if: success()
+        run:
+          docker build -t ${{secrets.DOCKER_HUB_USERNAME}}/loan_approval1:latest .
+      
+      - name: push image to dockerhub
+        if: success()
+        run:
+          docker push ${{secrets.DOCKER_HUB_USERNAME}}/loan_approval1:latest
 
+      
   
 
